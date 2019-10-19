@@ -23,3 +23,11 @@ From Scratch
 ** Registration and Login **
 => We will use firestore database 
 	npm install @angular/fire
+
+=> Create login, register component
+	npm generate page login
+	npm generate page register
+=> Create service for Authentication to hold login, register, logout methods
+	npm generate service services/authentication
+
+
