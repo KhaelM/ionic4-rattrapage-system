@@ -16,3 +16,10 @@ From Scratch
 	icon.pn			 1024x1024px
 => update changes
 	in terminal: ionic cordova resources
+=> change splashscreen option in config.xml and to learn more about these options visit apache cordova official doc
+=> to add animation follow this video https://www.youtube.com/watch?v=dPUmskG_-y0
+
+
+** Registration and Login **
+=> We will use firestore database 
+	npm install @angular/fire
