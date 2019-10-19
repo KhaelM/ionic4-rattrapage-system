@@ -5,6 +5,10 @@ From Scratch
 => chose blank project
 
 ** Splashcreen ** 
+=> add ios and android platform to project
+	in terminal: 	ionic cordova platform add ios
+			ionic cordova platform add android
+
 => generate automatic splash screen and icon
 	in terminal: ionic cordova resources
 => replace splash.png and icon.png by yours
