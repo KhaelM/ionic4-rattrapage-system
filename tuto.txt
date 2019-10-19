@@ -1,0 +1,14 @@
+From Scratch
+
+=> in terminal: ionic start 
+=> type project name
+=> chose blank project
+
+** Splashcreen ** 
+=> generate automatic splash screen and icon
+	in terminal: ionic cordova resources
+=> replace splash.png and icon.png by yours
+	splash.png size at least 2732x2732px
+	icon.pn			 1024x1024px
+=> update changes
+	in terminal: ionic cordova resources
