@@ -49,8 +49,8 @@ export class RegisterPage implements OnInit {
         this.router.navigate(['home']);
       });
       
-    }).catch((error) => {
-      this.registerError = error.toString();
+    }).catch(() => {
+      this.registerError = "Veuillez vérifier votre connexion Internet et réessayer pour continuer.";
     });
   }
 }

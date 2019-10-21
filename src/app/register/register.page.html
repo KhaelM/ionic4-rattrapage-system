@@ -30,7 +30,9 @@
   <p class="ion-padding-start">
     Déjà membre? <a (click)="goToLoginPage()">Connectez-vous</a>
   </p>
-  <ion-text class="ion-padding-start" color="danger" *ngIf="registerError">
-    {{ registerError }}
-  </ion-text>
+  <div class="ion-padding-start" *ngIf="registerError">
+    <ion-text color="danger">
+      {{ registerError }}
+    </ion-text>
+  </div>
 </ion-content>

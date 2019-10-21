@@ -46,7 +46,7 @@ export class LoginPage implements OnInit {
         }
       }
     }, error => {
-      this.loginError = "Une erreur s'est produite lors de la connexion à la base de données";
+      this.loginError = "Veuillez vérifier votre connexion Internet et réessayer pour continuer.";
     });
   }
 
