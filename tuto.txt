@@ -27,7 +27,77 @@ From Scratch
 => Create login, register component
 	npm generate page login
 	npm generate page register
-=> Create service for Authentication to hold login, register, logout methods
+=> Create service for Authentication to hold login, register, logout methods -> CRUD
 	npm generate service services/authentication
 
+=> Implements CRUD inside authentication.service.ts:
+	=> import AngularFirestore:
+		import { AngularFirestore } from '@angular/fire/firestore';
+	=> add a private AngularFirestore attribute inside constructor:
+		private firestore: AngularFirestore 
 
+	=> CREATE service:
+		There are two ways:
+			=> 1) Add with generated document(row equivalent) id:
+				createNewUser() {
+    				var record = {};
+					record['Nom'] = "Randrianarisona Michael";
+					record['Password'] = "azerty";
+					return this.firestore.collection("Users").add(record);
+				}
+			=> 2) Add with manual document id:
+				createManualId() {
+					return this.firestore.collection("Users").doc("ETU852").set({
+						Name: "Mooky",
+						Password: "test"
+					});
+				}
+
+		NOTE: We are returning here because return type is Promise<void> so we can use `.then((response) => {}, (rejection) => {})` when we will call this function from another one
+	
+	=> READ service:
+		checkEtu(etu) {
+    		var docRef = this.firestore.collection("Users").doc(etu);
+    		return docRef.get();
+  		}
+		
+		in other function we can use subscribe to get information:
+		checkEtu() {
+			this.authService.checkEtu(this.etuInput.trim()).subscribe(doc => {
+      			this.etuAvailable = !doc.exists;
+      			if(doc.exists) {
+        			if(this.passwordInput ===  doc.data()['Password'])
+        				console.log("connected");
+      			}
+    		}, error => {
+      			console.log("erreur");
+    		})
+		}
+
+		NOTE: when using subscribe we must check if there is an error by doing: error => {}
+
+		
+
+
+=> Integrate Angular firestore to project:
+	=> Make sure firebase is installed by checking in node_modules and in package.json because Angular Firestore depends on it. If not: npm install firebase
+	=> Import modules for Angular Firestore in app.module.ts
+		import { environment } from 'src/environments/environment'; => src/environment/environment.ts must be set
+		import { AngularFireModule } from '@angular/fire';
+		import { AngularFireDatabaseModule } from '@angular/fire/database';
+		import { AngularFirestoreModule } from '@angular/fire/firestore';
+	=> Add to imports:
+		AngularFireModule.initializeApp(environment.firebase),
+    	AngularFireDatabaseModule,
+    	AngularFirestoreModule
+	
+
+NOTE: AngularFirestore <=> firebase.firestore() from getStarted official doc
+
+
+=> SESSION PROTECTION:
+	=> npm install --save @ionic/storage
+	=> import modules in app.module.ts:
+		import { IonicStorageModule } from '@ionic/storage';
+		import { AuthGuard } from './services/AuthGuard.service';
+		import { AuthenticationService } from './services/Authentication.service';

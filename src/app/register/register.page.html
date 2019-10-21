@@ -1,9 +1,36 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>register</ion-title>
+  <ion-toolbar color="dark">
+    <ion-title>Inscription</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <form (ngSubmit)="signUp()">
+    <ion-list line="full">
+      <ion-item>
+        <ion-label for="fullname" position="floating">Nom complet</ion-label>
+        <ion-input type="text" name="fullname" clearInput [(ngModel)]="fullnameInput" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label for="etu" position="floating">ETU</ion-label>
+        <ion-input type="text" name="etu" clearInput [(ngModel)]="etuInput" (ionChange)="checkEtu()" required></ion-input>
+      </ion-item>
+      <ion-text class="ion-padding-start" color="danger" *ngIf="!etuAvailable && etuInput">
+        ETU{{ etuInput }} déjà existant.
+      </ion-text>
+      <ion-item>
+        <ion-label for="password" position="floating">Mot de passe</ion-label>
+        <ion-input name="password" clearInput [(ngModel)]="passwordInput" type="password" required></ion-input>
+      </ion-item>
+    </ion-list>
+    <div class="ion-padding-horizontal">
+      <ion-button expand="block" type="submit">S'inscrire</ion-button>
+    </div>
+  </form>
+  <p class="ion-padding-start">
+    Déjà membre? <a (click)="goToLoginPage()">Connectez-vous</a>
+  </p>
+  <ion-text class="ion-padding-start" color="danger" *ngIf="registerError">
+    {{ registerError }}
+  </ion-text>
 </ion-content>

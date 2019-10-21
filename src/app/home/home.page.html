@@ -1,14 +1,43 @@
+
 <ion-header>
   <ion-toolbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
+    <ion-title>Accueil</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div class="ion-padding">
-    The world is your oyster.
-    <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will be your guide.</p>
+<ion-content fullscreen>
+  <ion-list-header>Vos Informations</ion-list-header>
+  <p>
+    <ion-chip outline color="success">
+      <ion-icon name="school"></ion-icon>
+      <ion-label>{{ etu }}</ion-label>
+    </ion-chip>
+    <ion-chip>
+      <ion-avatar>
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjYzVkYmZmIiBkPSJNMCAwaDUxMnY1MTJIMHoiLz48cGF0aCBkPSJNMjU2IDMwNGM2MS42IDAgMTEyLTUwLjQgMTEyLTExMlMzMTcuNiA4MCAyNTYgODBzLTExMiA1MC40LTExMiAxMTIgNTAuNCAxMTIgMTEyIDExMnptMCA0MGMtNzQuMiAwLTIyNCAzNy44LTIyNCAxMTJ2NTZoNDQ4di01NmMwLTc0LjItMTQ5LjgtMTEyLTIyNC0xMTJ6IiBmaWxsPSIjODJhZWZmIi8+PC9zdmc+" />
+      </ion-avatar>
+      <ion-label>{{ fullName }}</ion-label>
+    </ion-chip>
+  </p>
+
+  <ion-list-header>Matières à rattraper</ion-list-header>
+  <ion-list *ngFor="let semestre of semestres">
+    <ion-item>
+      <ion-label>S{{semestre.Semestre}}</ion-label>
+      <ion-checkbox (ionChange)="toggle(semestre.Semestre)" color="{{semestre.Couleur}}" checked slot="start"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+
+  <div class="ion-padding-start">
+    <span *ngFor="let matiere of matieresInRattrapage">
+      <ion-chip *ngIf="isDisplayed(matiere)" outline color="{{ getMatiereColor(matiere) }}">
+        <ion-label >{{matiere}}</ion-label>
+        <ion-icon (click)="supprimerMatiere(matiere)" name="close-circle"></ion-icon>
+      </ion-chip>
+    </span>
   </div>
+
 </ion-content>

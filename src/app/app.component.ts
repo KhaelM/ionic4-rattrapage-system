@@ -3,8 +3,8 @@ import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-
-import { timer } from 'rxjs';
+import { AuthenticationService } from './services/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -12,13 +12,16 @@ import { timer } from 'rxjs';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
-  showSplash = true; // control the visibility of the animation
+  navigate : any;
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private authService: AuthenticationService,
+    private router: Router
   ) {
+    this.sideMenu();
     this.initializeApp();
   }
 
@@ -27,7 +30,33 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
 
-      timer(3000).subscribe(() => this.showSplash = false); // stop animation after 3 seconds
+      this.authService.authState.subscribe(state => {
+        if (state) {
+          this.router.navigate(['home']);
+        } else {
+          this.router.navigate(['login']);
+        }
+      });
     });
+  }
+
+  sideMenu()
+  {
+    this.navigate =[
+      {
+        title : "Accueil",
+        url   : "/home",
+        icon  : "home"
+      },
+      {
+        title : "Choix des matières à rattraper",
+        url   : "/matieres",
+        icon  : "book"
+      }
+    ]
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }
